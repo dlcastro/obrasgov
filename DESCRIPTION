@@ -1,0 +1,14 @@
+Package: obrasgovR
+Title: Pacote para Acesso à API do Obrasgov
+Version: 0.1.0
+Authors@R: 
+    person("Daniel", "Castro", email = "daniel@dlcastro.com", role = c("aut", "cre"))
+Description: Este pacote fornece funções para acessar e extrair dados de todos os endpoints da API do Obrasgov (https://api.obrasgov.gestao.gov.br/obrasgov/api/swagger-ui/index.html#/).
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+NeedsCompilation: no
+Packaged: 2025-06-19 20:08:07 UTC; root
+Author: Daniel Castro [aut, cre]
+Maintainer: Daniel Castro <daniel@dlcastro.com>
