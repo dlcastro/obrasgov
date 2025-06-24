@@ -15,5 +15,6 @@ obrasgov_api_request(path, query_params = list())
 A data frame with the API response.
 }
 \description{
-Base function to make API requests to Obrasgov
+This function is not exported and is for internal package use only.
 }
+\keyword{internal}
