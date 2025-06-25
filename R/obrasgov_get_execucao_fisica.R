@@ -2,8 +2,8 @@
 #' 
 #' This function retrieves physical execution data from the Obrasgov API.
 #' @param idUnico Unique identifier of the intervention.
-#' @param situacao Situation of the intervention (e.g., "Em Execução").
-#' @param tamanhoDaPagina NSet the page size. A larger value reduces the number of API calls.
+#' @param situacao Situation of the intervention ("Em Execução", "Paralisada", "Cancelada", "Cadastrada", "Concluída" or "Inacabada").
+#' @param tamanhoDaPagina Set the page size. A larger value reduces the number of API calls. HIGH NUMBERS (>30) RESULT IN PAGING LOOP PROBLEMS!
 #' @param showProgress A logical value to control whether the progress bar is displayed.
 #' @param max_pages An integer to limit the maximum number of pages to download. Defaults to `Inf` (all pages).
 #' @param parallel A logical value to enable parallel processing for downloads. Defaults to `FALSE`.
@@ -13,11 +13,14 @@
 obrasgov_get_execucao_fisica <- function(
     idUnico = NULL,
     situacao = NULL,
-    showProgress = TRUE
+    showProgress = TRUE,
+    max_pages = Inf,
+    parallel = FALSE,
+    workers = 2
 ) {
   query_params <- list(
     idUnico = idUnico,
-    size = 200 # Using a larger fixed size for pagination
+    situacao = situacao
   )
   
   query_params <- query_params[!sapply(query_params, is.null)]
@@ -44,9 +47,16 @@ obrasgov_get_arquivos_intervencao <- function(
     idUnico = NULL,
     showProgress = TRUE
 ) {
+  
+  
+  # Verify if idUnico is filled.
+  if (is.null(idUnico)) {
+    stop("idUnico needs to be filled in")
+  }
+  
+  
   query_params <- list(
     idUnico = idUnico,
-    size = 200 # Using a larger fixed size for pagination
   )
   
   query_params <- query_params[!sapply(query_params, is.null)]
