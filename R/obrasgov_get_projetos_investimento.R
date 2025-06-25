@@ -1,64 +1,58 @@
-
-
-#\' Get Investment Projects
-#\' 
-#\' This function retrieves investment projects from the Obrasgov API.
-#\' @param idUnico Unique identifier of the intervention.
-#\' @param situacao Situation of the intervention (e.g., "Em Execução", "Paralisada", "Cancelada", "Castrada", "Concluída" or "Inacabada").
-#\' @param codigoOrganizacao Organization code participating in the intervention.
-#\' @param nomeOrganizacao Organization name participating in the intervention.
-#\' @param uf Main UF of the intervention (e.g., "DF").
-#\' @param municipio Main municipality of the intervention (e.g., "Brasília").
-#\' @param eixo Investment project axis (e.g., "EDUCAÇÃO").
-#\' @param subEixo Investment project sub-axis (e.g., "EDUCAÇÃO BÁSICA").
-#\' @param tipoIntervencao Type of intervention (e.g., "OBRAS").
-#\' @param naturezaIntervencao Nature of intervention (e.g., "CONSTRUÇÃO").
-#\' @param fonteRecurso Source of resource (e.g., "ORÇAMENTO GERAL DA UNIÃO").
-#\' @param dataInicio Start date of the intervention (format: yyyy-MM-dd).
-#\' @param dataFim End date of the intervention (format: yyyy-MM-dd).
-#\' @param page Page number (0-based).
-#\' @param size Page size.
-#\' @return A data frame with investment projects.
-#\' @export
+#' Get Investment Projects
+#' 
+#' This function retrieves investment projects from the Obrasgov API.
+#' It supports filtering, pagination control, and parallel downloads.
+#' 
+#' @param idUnico Unique identifier of the intervention.
+#' @param situacao Situation of the intervention (e.g., "Em Execução").
+#' @param codigoOrganizacao Organization code participating in the intervention.
+#' @param nomeOrganizacao Organization name participating in the intervention.
+#' @param uf Main UF of the intervention (e.g., "DF").
+#' @param dataCadastro Intervention Registration Date "YYYY-MM-DD".
+#' @param natureza Intervation nature (e.g, "Obra").
+#' @param tamanhoDaPagina NSet the page size. A larger value reduces the number of API calls.
+#' @param showProgress A logical value to control whether the progress bar is displayed.
+#' @param max_pages An integer to limit the maximum number of pages to download. Defaults to `Inf` (all pages).
+#' @param parallel A logical value to enable parallel processing for downloads. Defaults to `FALSE`.
+#' @param workers An integer specifying the number of parallel workers (cores) to use when `parallel = TRUE`.
+#' @return A data frame with investment projects.
+#' @export
 obrasgov_get_projetos_investimento <- function(
-  idUnico = NULL,
-  situacao = NULL,
-  codigoOrganizacao = NULL,
-  nomeOrganizacao = NULL,
-  uf = NULL,
-  municipio = NULL,
-  eixo = NULL,
-  subEixo = NULL,
-  tipoIntervencao = NULL,
-  naturezaIntervencao = NULL,
-  fonteRecurso = NULL,
-  dataInicio = NULL,
-  dataFim = NULL,
-  page = 0,
-  size = 10
+    idUnico = NULL,
+    situacao = NULL,
+    codigoOrganizacao = NULL,
+    nomeOrganizacao = NULL,
+    uf = NULL,
+    dataCadastro = NULL,
+    natureza = NULL,
+    tamanhoDaPagina = 20,
+    showProgress = TRUE,
+    max_pages = Inf,
+    parallel = FALSE,
+    workers = 2
 ) {
+  # Collect all filter arguments into a list
   query_params <- list(
     idUnico = idUnico,
     situacao = situacao,
     codigoOrganizacao = codigoOrganizacao,
     nomeOrganizacao = nomeOrganizacao,
     uf = uf,
-    municipio = municipio,
-    eixo = eixo,
-    subEixo = subEixo,
-    tipoIntervencao = tipoIntervencao,
-    naturezaIntervencao = naturezaIntervencao,
-    fonteRecurso = fonteRecurso,
-    dataInicio = dataInicio,
-    dataFim = dataFim,
-    page = page,
-    size = size
+    dataCadastro = dataCadastro,
+    natureza = natureza,
+    tamanhoDaPagina = tamanhoDaPagina
   )
   
-  # Remove NULL parameters
+  # Remove any NULL parameters that might have been passed
   query_params <- query_params[!sapply(query_params, is.null)]
-
-  obrasgov_api_request("/projeto-investimento", query_params)
+  
+  # Call the base request function, passing all parameters along
+  obrasgov_api_request(
+    path = "/projeto-investimento", 
+    query_params = query_params, 
+    showProgress = showProgress, 
+    max_pages = max_pages,
+    parallel = parallel,
+    workers = workers
+  )
 }
-
-

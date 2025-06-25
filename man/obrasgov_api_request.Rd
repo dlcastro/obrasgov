@@ -4,17 +4,34 @@
 \alias{obrasgov_api_request}
 \title{Base function to make API requests to Obrasgov}
 \usage{
-obrasgov_api_request(path, query_params = list())
+obrasgov_api_request(
+  path,
+  query_params = list(),
+  showProgress = TRUE,
+  max_pages = Inf,
+  parallel = FALSE,
+  workers = 2
+)
 }
 \arguments{
-\item{path}{The API endpoint path (e.g., "/projeto-investimento").}
+\item{path}{The API endpoint path.}
 
 \item{query_params}{A list of query parameters.}
+
+\item{showProgress}{A logical value to control whether the progress bar is displayed.}
+
+\item{max_pages}{An integer to limit the maximum number of pages to download.}
+
+\item{parallel}{A logical value to enable parallel processing.}
+
+\item{workers}{An integer specifying the number of parallel workers (cores) to use.}
 }
 \value{
 A data frame with the API response.
 }
 \description{
-This function is not exported and is for internal package use only.
+This function now handles pagination automatically, displays a progress bar,
+and allows limiting the number of pages, with an option for parallel downloads.
+It also handles API inconsistencies in parameter naming (page/pagina).
 }
 \keyword{internal}
