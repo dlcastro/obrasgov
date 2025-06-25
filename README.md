@@ -1,174 +1,210 @@
-# obrasgovR: Um Pacote R para Acesso à API do Obrasgov
+# obrasgovR: An R Package for Accessing the Obrasgov API
 
 ![R-CRAN-Badge](https://img.shields.io/badge/R-4.0%2B-blue.svg) ![License](https://img.shields.io/badge/License-MIT-green.svg)
 
-O `obrasgovR` é um pacote R desenvolvido para simplificar a interação com a API do Obrasgov (https://api.obrasgov.gestao.gov.br/obrasgov/api/swagger-ui/index.html#/). Ele oferece funções intuitivas para extrair dados de todos os endpoints disponíveis, permitindo que analistas e pesquisadores acessem informações sobre projetos de investimento, execução financeira, execução física e georreferenciamento de obras públicas federais diretamente em seus fluxos de trabalho em R.
+`obrasgovR` is an R package designed to simplify interaction with the Obrasgov API (<https://api.obrasgov.gestao.gov.br/obrasgov/api/swagger-ui/index.html#/>). It provides intuitive functions to extract data from all available endpoints, enabling analysts and researchers to access information on federal public works investment projects, financial execution, physical execution, and georeferencing directly within their R workflows.
 
-## Por que usar `obrasgovR`?
+## Why use `obrasgovR`?
 
-*   **Acesso Simplificado**: Abstrai a complexidade das requisições HTTP e do tratamento de JSON.
-*   **Dados Estruturados**: Retorna os dados da API diretamente em formatos amigáveis do R (data frames).
-*   **Foco na Análise**: Permite que você se concentre na análise dos dados, em vez de na coleta.
-*   **Abrangente**: Cobre todos os endpoints da API do Obrasgov.
+* **Simplified Access**: Abstracts the complexity of HTTP requests and JSON handling.
 
-## Instalação
+* **Structured Data**: Returns API data directly in R-friendly formats (data frames).
 
-Para instalar a versão de desenvolvimento do `obrasgovR` diretamente do GitHub, você precisará do pacote `devtools`. Se você ainda não o tem, instale-o primeiro:
+* **Focus on Analysis**: Allows you to concentrate on data analysis rather than data collection.
 
-```R
-# 1. Instale o pacote 'devtools' (se ainda não tiver)
+* **Comprehensive**: Covers all endpoints of the Obrasgov API.
+
+* **Advanced Features**: Includes built-in support for pagination, progress bars, and parallel downloads to handle large datasets efficiently.
+
+## Installation
+
+To install the development version of `obrasgovR` directly from GitHub, you will need the `devtools` package. If you don't have it yet, install it first:
+
+```r
+# 1. Install the 'devtools' package (if you haven't already)
 if (!requireNamespace("devtools", quietly = TRUE)) {
-  install.packages("devtools", repos = "http://cran.us.r-project.org")
+  install.packages("devtools")
 }
 
-# 2. Instale o pacote 'obrasgovR' do GitHub
-devtools::install_github("dlcastro/obrasgovR").
+# 2. Install the 'obrasgovR' package from GitHub
+devtools::install_github("dlcastro/obrasgovR")
 ```
 
-## Como Usar: Um Guia Rápido
+## How to Use: A Quick Guide
 
-Após a instalação, você pode carregar o pacote e começar a usar suas funções. Cada função corresponde a um endpoint da API do Obrasgov e aceita parâmetros que filtram a consulta, assim como na documentação oficial da API.
+After installation, you can load the package and start using its functions. Each function corresponds to an Obrasgov API endpoint and accepts parameters to filter the query, just like in the official API documentation.
 
-### 1. Carregando o Pacote
+### 1. Loading the Package
 
-```R
+```r
 library(obrasgovR)
 ```
 
-### 2. Funções de Extração de Dados
+### 2. Common Function Parameters
 
-As funções do `obrasgovR` são nomeadas de forma clara para refletir os endpoints da API. Abaixo estão exemplos de como usar cada uma delas.
+Most data extraction functions in `obrasgovR` share a set of parameters to control the download process:
+
+* `tamanhoDaPagina` (or `size`): Sets the number of results per page. A larger value reduces the number of API calls but is subject to API limits. Defaults to `20`.
+
+* `showProgress`: A logical value (`TRUE`/`FALSE`) to control whether a progress bar is displayed during download. Defaults to `TRUE`.
+
+* `max_pages`: An integer to limit the maximum number of pages to download. Use `Inf` to get all available pages. Defaults to `Inf`.
+
+* `parallel`: A logical value (`TRUE`/`FALSE`) to enable parallel processing for faster downloads on multi-core machines. Defaults to `FALSE`.
+
+* `workers`: An integer specifying the number of parallel workers (cores) to use when `parallel = TRUE`. Defaults to `2`.
+
+### 3. Data Extraction Functions
+
+The functions in `obrasgovR` are clearly named to reflect the API endpoints. Below are examples of how to use each one.
 
 #### `obrasgov_get_projetos_investimento()`
 
-Esta função permite consultar projetos de investimento. Você pode filtrar por situação, UF, município, eixo, etc.
+This function allows you to query investment projects. You can filter by situation, state (UF), organization, etc.
 
-**Parâmetros Comuns:**
-*   `idUnico`: Identificador único da intervenção.
-*   `situacao`: Situação da intervenção (e.g., "Em Execução", "Paralisada", "Cancelada", "Castrada", "Concluída" ou "Inacabada").
-*   `uf`: UF principal da intervenção (e.g., "DF", "SP").
-*   `municipio`: Município principal da intervenção (e.g., "Brasília", "São Paulo").
-*   `eixo`: Eixo do projeto de investimento (e.g., "EDUCAÇÃO", "SAÚDE").
-*   `dataInicio`, `dataFim`: Datas de início e fim da intervenção (formato: "yyyy-MM-dd").
-*   `page`, `size`: Parâmetros de paginação para controlar o número de resultados e a página.
+**Parameters:**
 
-**Exemplo:** Obter projetos de investimento com situação "Concluída" no Distrito Federal.
+* `idUnico`: Unique identifier of the intervention.
 
-```R
-projetos_concluidos_df <- obrasgov_get_projetos_investimento(
+* `situacao`: Situation of the intervention (e.g., "Em Execução", "Paralisada", "Concluída").
+
+* `codigoOrganizacao`: Organization code participating in the intervention.
+
+* `nomeOrganizacao`: Organization name participating in the intervention.
+
+* `uf`: Main state (UF) of the intervention (e.g., "DF", "SP").
+
+* `dataCadastro`: Intervention registration date (format: "YYYY-MM-DD").
+
+* `natureza`: Nature of the intervention (e.g., "Obra").
+
+**Example:** Get completed investment projects in the state of Distrito Federal (DF).
+
+```r
+# Get completed projects in DF, fetching 50 results per page
+completed_projects_df <- obrasgov_get_projetos_investimento(
   situacao = "Concluída",
   uf = "DF",
-  size = 50 # Aumenta o número de resultados por página
+  tamanhoDaPagina = 50 
 )
 
-# Visualize as primeiras linhas do resultado
-head(projetos_concluidos_df)
-
-# Verifique a estrutura dos dados
-str(projetos_concluidos_df)
+# View the first few rows of the result
+head(completed_projects_df)
 ```
 
 #### `obrasgov_get_execucao_financeira()`
 
-Consulta dados de execução financeira para intervenções.
+Queries financial execution data for interventions.
 
-**Parâmetros Comuns:**
-*   `idUnico`: Identificador único da intervenção.
-*   `page`, `size`: Parâmetros de paginação.
+**Parameters:**
 
-**Exemplo:** Obter dados de execução financeira para um ID único específico.
+* `idProjetoInvestimento`: The investment project ID.
 
-```R
-# **ATENÇÃO**: Substitua 'SEU_ID_UNICO_AQUI' por um ID único real de uma intervenção.
-execucao_financeira <- obrasgov_get_execucao_financeira(
-  idUnico = "SEU_ID_UNICO_AQUI"
+* `nrNotaEmpenho`: The commitment note number.
+
+* `ugEmitente`: The issuing management unit code.
+
+* `anoInicial`: The starting year for the filter.
+
+* `anoFinal`: The ending year for the filter.
+
+**Example:** Get financial execution data for a specific commitment note from a given year.
+
+```r
+# NOTE: Replace with a real commitment note number and year.
+financial_execution <- obrasgov_get_execucao_financeira(
+  nrNotaEmpenho = "123456789",
+  anoInicial = 2023
 )
 
-head(execucao_financeira)
+head(financial_execution)
 ```
 
 #### `obrasgov_get_saldo_contabil()`
 
-Consulta o saldo contábil de intervenções.
+Queries the accounting balance of interventions.
 
-**Parâmetros Comuns:**
-*   `idUnico`: Identificador único da intervenção.
-*   `page`, `size`: Parâmetros de paginação.
+**Parameters:**
 
-**Exemplo:** Obter saldo contábil para um ID único específico.
+* `ugEmitente`: The issuing management unit code.
 
-```R
-# **ATENÇÃO**: Substitua 'SEU_ID_UNICO_AQUI' por um ID único real de uma intervenção.
-saldo_contabil <- obrasgov_get_saldo_contabil(
-  idUnico = "SEU_ID_UNICO_AQUI"
+* `nrNotaEmpenho`: The commitment note number.
+
+**Example:** Get the accounting balance for a specific commitment note.
+
+```r
+# NOTE: Replace with a real management unit and commitment note number.
+accounting_balance <- obrasgov_get_saldo_contabil(
+  ugEmitente = "123456",
+  nrNotaEmpenho = "987654321"
 )
 
-head(saldo_contabil)
+head(accounting_balance)
 ```
 
 #### `obrasgov_get_execucao_fisica()`
 
-Consulta dados de execução física de intervenções.
+Queries physical execution data of interventions.
 
-**Parâmetros Comuns:**
-*   `idUnico`: Identificador único da intervenção.
-*   `page`, `size`: Parâmetros de paginação.
+**Parameters:**
 
-**Exemplo:** Obter dados de execução física para um ID único específico.
+* `idUnico`: Unique identifier of the intervention.
 
-```R
-# **ATENÇÃO**: Substitua 'SEU_ID_UNICO_AQUI' por um ID único real de uma intervenção.
-execucao_fisica <- obrasgov_get_execucao_fisica(
-  idUnico = "SEU_ID_UNICO_AQUI"
+* `situacao`: Situation of the intervention (e.g., "Em Execução", "Paralisada").
+
+**Example:** Get physical execution data for a specific unique ID.
+
+```r
+# NOTE: Replace 'YOUR_UNIQUE_ID_HERE' with a real unique ID from an intervention.
+physical_execution <- obrasgov_get_execucao_fisica(
+  idUnico = "YOUR_UNIQUE_ID_HERE"
 )
 
-head(execucao_fisica)
+head(physical_execution)
 ```
 
 #### `obrasgov_get_arquivos_intervencao()`
 
-Consulta arquivos (fotos e vídeos) relacionados a uma intervenção.
+Queries files (photos and videos) related to an intervention.
 
-**Parâmetros Comuns:**
-*   `idUnico`: Identificador único da intervenção.
-*   `page`, `size`: Parâmetros de paginação.
+**Parameters:**
 
-**Exemplo:** Obter arquivos de intervenção para um ID único específico.
+* `idUnico`: Unique identifier of the intervention. *(This parameter is required)*.
 
-```R
-# **ATENÇÃO**: Substitua 'SEU_ID_UNICO_AQUI' por um ID único real de uma intervenção.
-arquivos_intervencao <- obrasgov_get_arquivos_intervencao(
-  idUnico = "SEU_ID_UNICO_AQUI"
+**Example:** Get intervention files for a specific unique ID.
+
+```r
+# NOTE: Replace 'YOUR_UNIQUE_ID_HERE' with a real unique ID from an intervention.
+intervention_files <- obrasgov_get_arquivos_intervencao(
+  idUnico = "YOUR_UNIQUE_ID_HERE"
 )
 
-head(arquivos_intervencao)
+head(intervention_files)
 ```
 
 #### `obrasgov_get_geometria()`
 
-Consulta dados de georreferenciamento de intervenções.
+Queries georeferencing data (latitude/longitude) of interventions.
 
-**Parâmetros Comuns:**
-*   `idUnico`: Identificador único da intervenção.
-*   `page`, `size`: Parâmetros de paginação.
+**Parameters:**
 
-**Exemplo:** Obter dados de georreferenciamento para um ID único específico.
+* `idUnico`: Unique identifier of the intervention. *(This parameter is required)*.
 
-```R
-# **ATENÇÃO**: Substitua 'SEU_ID_UNICO_AQUI' por um ID único real de uma intervenção.
-geometria <- obrasgov_get_geometria(
-  idUnico = "SEU_ID_UNICO_AQUI"
+**Example:** Get georeferencing data for a specific unique ID.
+
+```r
+# NOTE: Replace 'YOUR_UNIQUE_ID_HERE' with a real unique ID from an intervention.
+geometry_data <- obrasgov_get_geometria(
+  idUnico = "YOUR_UNIQUE_ID_HERE"
 )
 
-head(geometria)
+head(geometry_data)
 ```
 
-## Contribuição
+## Contribution
 
-Contribuições são bem-vindas! Se você encontrar um bug, tiver uma sugestão de melhoria ou quiser adicionar novas funcionalidades, por favor, abra uma issue ou envie um pull request no repositório do GitHub.
+Contributions are welcome! If you find a bug, have a suggestion for improvement, or want to add new features, please open an issue or submit a pull request in the [GitHub repository](https://github.com/dlcastro/obrasgovR).
 
-## Licença
+## License
 
-Este pacote é distribuído sob a licença MIT. Consulte o arquivo `LICENSE` para mais detalhes.
-
-
+This package is distributed under the MIT license. See the `LICENSE` file for more details.
