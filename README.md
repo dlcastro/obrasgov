@@ -1,6 +1,6 @@
 # obrasgov: Brazil's Obrasgov API data reader <img src="obrasgov_logo_140.png" height="139" align="right"/>
 
-![R-CRAN-Badge](https://img.shields.io/badge/R-4.0%2B-blue.svg) [![CRAN status](https://www.r-pkg.org/badges/version/obrasgov)](https://cran.r-project.org/package=obrasgov) ![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)
+![R-CRAN-Badge](https://img.shields.io/badge/R-4.0%2B-blue.svg) [![CRAN status](https://www.r-pkg.org/badges/version/obrasgov)](https://cran.r-project.org/package=obrasgov) ![License: MIT](https://img.shields.io/badge/License-MIT-orange)
 
 `obrasgov` is an R package designed to simplify interaction with the Obrasgov.BR API (<https://api.obrasgov.gestao.gov.br/obrasgov/api/swagger-ui/index.html#/>). It provides intuitive functions to extract data from all available endpoints, allowing analysts and researchers to access information on federal public works investment projects, financial execution, physical execution, and georeferencing directly within their R workflows.
 
@@ -169,9 +169,9 @@ head(media_files)
 
 ## Contribution
 
-Contributions are welcome! If you find a bug, have a suggestion for improvement, or want to add new features, please open an issue or submit a pull request in the [GitHub repository](https://github.com/dlcastro/obrasgov).
+Contributions are welcome! If you find a bug, have a suggestion for improvement, or want to add new features, please open an issue in the [GitHub repository](https://github.com/dlcastro/obrasgov).
 
 ## License
 
-This package is distributed under the [GPL (>= 3)](http://www.gnu.org/licenses/gpl-3.0.en.html) license. See the `LICENSE` file for more details.
+This package is free and open source software, under [MIT](https://opensource.org/license/mit) + LICENSE. See the [LICENSE](https://github.com/dlcastro/obrasgov/blob/main/LICENSE) file for more details.
 
