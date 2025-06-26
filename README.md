@@ -1,6 +1,6 @@
 # obrasgov: Brazil's Obrasgov API data reader <img src="obrasgov_logo_140.png" height="139" align="right"/>
 
-[![CRAN status](https://www.r-pkg.org/badges/version/obrasgov)](https://cran.r-project.org/package=obrasgov) ![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)
+![R-CRAN-Badge](https://img.shields.io/badge/R-4.0%2B-blue.svg) [![CRAN status](https://www.r-pkg.org/badges/version/obrasgov)](https://cran.r-project.org/package=obrasgov) ![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)
 
 `obrasgov` is an R package designed to simplify interaction with the Obrasgov.BR API (<https://api.obrasgov.gestao.gov.br/obrasgov/api/swagger-ui/index.html#/>). It provides intuitive functions to extract data from all available endpoints, allowing analysts and researchers to access information on federal public works investment projects, financial execution, physical execution, and georeferencing directly within their R workflows.
 
