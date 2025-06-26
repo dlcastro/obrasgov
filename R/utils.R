@@ -144,7 +144,7 @@ obrasgov_api_request <- function(path, query_params = list(), showProgress = TRU
 #' @importFrom dplyr select select_if rename_with
 #' @importFrom tidyr unnest
 #' @importFrom rlang sym
-#' @export
+#' @keywords internal
 #' @examples
 #' \dontrun{
 #' # First, fetch the project data
@@ -170,9 +170,9 @@ flatten_projects <- function(project_data) {
   }
   
   # 1. Separate the main data.frame (columns that are not lists)
-  # Corrected the syntax to use the formula notation `~` required by dplyr's select_if.
+  # Modernized the selection to be more robust and avoid NOTE's with '.x'
   main_df <- project_data |> 
-    dplyr::select(dplyr::where(~!is.list(.x)))
+    dplyr::select(!dplyr::where(is.list))
   
   # 2. Get the names of the columns that are lists
   list_cols <- names(project_data)[sapply(project_data, is.list)]
@@ -188,18 +188,21 @@ flatten_projects <- function(project_data) {
     # flattens the list, replicating the corresponding `idUnico` for each 
     # nested element. This ensures the connection between the main data (projects) 
     # and this secondary data is maintained.
+    
+    # CORRECTED to use .data$idUnico to avoid 'no visible binding' NOTE
     flattened_df <- project_data |>
-      dplyr::select(idUnico, !!rlang::sym(col_name)) |>
+      dplyr::select(.data$idUnico, !!rlang::sym(col_name)) |>
       tidyr::unnest(cols = c(!!rlang::sym(col_name)), keep_empty = TRUE)
     
     # Check if unnesting produced any columns besides `idUnico`
     if (ncol(flattened_df) > 1) {
       
       # 5. Add a prefix to the new columns, avoiding renaming `idUnico`
+      # CORRECTED to refer to `idUnico` as a string to avoid 'no visible binding' NOTE
       flattened_df <- flattened_df |>
         dplyr::rename_with(
           ~ paste(col_name, .x, sep = "_"),
-          -idUnico
+          -"idUnico"
         )
       
       # Add the flattened data.frame to the results list
@@ -211,4 +214,3 @@ flatten_projects <- function(project_data) {
   
   return(result_list)
 }
-

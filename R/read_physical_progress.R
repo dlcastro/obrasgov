@@ -14,6 +14,7 @@ read_physical_progress <- function(
     idUnico = NULL,
     situacao = NULL,
     showProgress = TRUE,
+    tamanhoDaPagina = 10,
     max_pages = Inf,
     parallel = FALSE,
     workers = 2

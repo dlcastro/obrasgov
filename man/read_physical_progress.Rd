@@ -8,6 +8,7 @@ read_physical_progress(
   idUnico = NULL,
   situacao = NULL,
   showProgress = TRUE,
+  tamanhoDaPagina = 10,
   max_pages = Inf,
   parallel = FALSE,
   workers = 2
@@ -20,13 +21,13 @@ read_physical_progress(
 
 \item{showProgress}{A logical value to control whether the progress bar is displayed.}
 
+\item{tamanhoDaPagina}{Set the page size. A larger value reduces the number of API calls. HIGH NUMBERS (>30) RESULT IN PAGING LOOP PROBLEMS!}
+
 \item{max_pages}{An integer to limit the maximum number of pages to download. Defaults to \code{Inf} (all pages).}
 
 \item{parallel}{A logical value to enable parallel processing for downloads. Defaults to \code{FALSE}.}
 
 \item{workers}{An integer specifying the number of parallel workers (cores) to use when \code{parallel = TRUE}.}
-
-\item{tamanhoDaPagina}{Set the page size. A larger value reduces the number of API calls. HIGH NUMBERS (>30) RESULT IN PAGING LOOP PROBLEMS!}
 }
 \value{
 A data frame with physical execution data.
