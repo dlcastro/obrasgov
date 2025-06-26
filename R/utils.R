@@ -146,7 +146,7 @@ obrasgov_api_request <- function(path, query_params = list(), showProgress = TRU
 #'   and prefixed column names.
 #' @importFrom dplyr select select_if rename_with
 #' @importFrom tidyr unnest
-#' @importFrom rlang sym
+#' @importFrom rlang sym .data
 #' @keywords internal
 #' @examples
 #' \dontrun{
