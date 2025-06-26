@@ -40,3 +40,4 @@ geometries_df <- project_list$geometries
 head(geometries_df)
 }
 }
+\keyword{internal}
