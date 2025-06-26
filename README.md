@@ -1,4 +1,4 @@
-# obrasgov: Brazil's Obrasgov API data reader <img src="obrasgov_logo_140.png" height="139" align="right"/>
+# obrasgov: Brazil's Obrasgov API data reader <img src="man/figures/obrasgov_logo_140.png" height="139" align="right"/>
 
 ![R-CRAN-Badge](https://img.shields.io/badge/R-4.0%2B-blue.svg) [![CRAN status](https://www.r-pkg.org/badges/version/obrasgov)](https://cran.r-project.org/package=obrasgov) ![License: MIT](https://img.shields.io/badge/License-MIT-orange)
 
