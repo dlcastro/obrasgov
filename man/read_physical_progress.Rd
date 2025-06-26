@@ -21,7 +21,7 @@ read_physical_progress(
 
 \item{showProgress}{A logical value to control whether the progress bar is displayed.}
 
-\item{tamanhoDaPagina}{Set the page size. A larger value reduces the number of API calls. HIGH NUMBERS (>30) RESULT IN PAGING LOOP PROBLEMS!}
+\item{tamanhoDaPagina}{Set the page size. A larger value reduces the number of API calls.}
 
 \item{max_pages}{An integer to limit the maximum number of pages to download. Defaults to \code{Inf} (all pages).}
 

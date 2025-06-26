@@ -37,7 +37,7 @@ read_project(
 
 \item{tamanhoDaPagina}{Set the page size. A larger value reduces the number of API calls.}
 
-\item{geometry}{Converts WKB code to Geometry.  Defaults to \code{TRUE}. Turn FALSE if you fell it is breaking the downloading.}
+\item{geometry}{Converts WKB code to Geometry.  Defaults to \code{TRUE}. Turn FALSE if you feel it is breaking the downloading.}
 
 \item{showProgress}{A logical value to control whether the progress bar is displayed.}
 

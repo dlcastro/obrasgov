@@ -3,7 +3,7 @@
 #' This function retrieves physical execution data from the Obrasgov API.
 #' @param idUnico Unique identifier of the intervention.
 #' @param situacao Situation of the intervention ("Em Execução", "Paralisada", "Cancelada", "Cadastrada", "Concluída" or "Inacabada").
-#' @param tamanhoDaPagina Set the page size. A larger value reduces the number of API calls. HIGH NUMBERS (>30) RESULT IN PAGING LOOP PROBLEMS!
+#' @param tamanhoDaPagina Set the page size. A larger value reduces the number of API calls.
 #' @param showProgress A logical value to control whether the progress bar is displayed.
 #' @param max_pages An integer to limit the maximum number of pages to download. Defaults to `Inf` (all pages).
 #' @param parallel A logical value to enable parallel processing for downloads. Defaults to `FALSE`.

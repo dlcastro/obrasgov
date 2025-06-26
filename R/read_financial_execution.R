@@ -1,11 +1,11 @@
 #' Get Financial Execution Data
 #' 
 #' This function retrieves financial execution data from the Obrasgov API.
-#' @param idProjetoInvestimento PREENCHER.
-#' @param nrNotaEmpenho PREENCHER.  
-#' @param ugEmitente description.
-#' @param anoInicial preencher.
-#' @param anoFinal preencher.
+#' @param idProjetoInvestimento idUnico equivalent. The investment project ID.
+#' @param nrNotaEmpenho The commitment note number.  
+#' @param ugEmitente The issuing management unit code.
+#' @param anoInicial The starting year for the filter.
+#' @param anoFinal The ending year for the filter.
 #' @param tamanhoDaPagina NSet the page size. A larger value reduces the number of API calls.
 #' @param showProgress A logical value to control whether the progress bar is displayed.
 #' @param max_pages An integer to limit the maximum number of pages to download. Defaults to `Inf` (all pages).

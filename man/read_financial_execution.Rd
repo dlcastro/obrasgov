@@ -18,15 +18,15 @@ read_financial_execution(
 )
 }
 \arguments{
-\item{idProjetoInvestimento}{PREENCHER.}
+\item{idProjetoInvestimento}{idUnico equivalent. The investment project ID.}
 
-\item{nrNotaEmpenho}{PREENCHER.}
+\item{nrNotaEmpenho}{The commitment note number.}
 
-\item{ugEmitente}{description.}
+\item{ugEmitente}{The issuing management unit code.}
 
-\item{anoInicial}{preencher.}
+\item{anoInicial}{The starting year for the filter.}
 
-\item{anoFinal}{preencher.}
+\item{anoFinal}{The ending year for the filter.}
 
 \item{tamanhoDaPagina}{NSet the page size. A larger value reduces the number of API calls.}
 

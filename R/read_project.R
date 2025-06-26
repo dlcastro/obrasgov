@@ -11,7 +11,7 @@
 #' @param dataCadastro Intervention Registration Date "YYYY-MM-DD".
 #' @param natureza Intervation nature (e.g, "Obra").
 #' @param tamanhoDaPagina Set the page size. A larger value reduces the number of API calls.
-#' @param geometry Converts WKB code to Geometry.  Defaults to `TRUE`. Turn FALSE if you fell it is breaking the downloading.
+#' @param geometry Converts WKB code to Geometry.  Defaults to `TRUE`. Turn FALSE if you feel it is breaking the downloading.
 #' @param showProgress A logical value to control whether the progress bar is displayed.
 #' @param max_pages Maximum number of pages to download. Change to `Inf` to download all pages.
 #' @param parallel A logical value to enable parallel processing for downloads. Defaults to `FALSE`.
