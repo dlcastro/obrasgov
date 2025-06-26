@@ -83,7 +83,7 @@ head(main_projects)
 head(geometries)
 ```
 
-#### `read_financial_progress()`
+#### `read_financial_execution()`
 
 Queries financial execution data for the interventions.
 
@@ -98,10 +98,8 @@ Queries financial execution data for the interventions.
 **Example:** Get financial execution data for a specific commitment note from a given year.
 
 ```r
-# NOTE: Replace with a real commitment note number and year.
-financial_execution <- read_financial_progress(
-  nrNotaEmpenho = "123456789",
-  anoInicial = 2023
+financial_execution <- read_financial_execution(
+  nrNotaEmpenho = "2023NE000067"
 )
 
 head(financial_execution)
@@ -119,10 +117,8 @@ Queries the accounting balance of the interventions.
 **Example:** Get the accounting balance for a specific commitment note.
 
 ```r
-# NOTE: Replace with a real management unit and commitment note number.
 accounting_balance <- read_accounting_balance(
-  ugEmitente = "123456",
-  nrNotaEmpenho = "987654321"
+  nrNotaEmpenho = "2023NE000067"
 )
 
 head(accounting_balance)
@@ -142,7 +138,7 @@ Queries physical execution data of the interventions.
 ```r
 # NOTE: Replace 'YOUR_UNIQUE_ID_HERE' with a real ID from an intervention.
 physical_execution <- read_physical_progress(
-  idUnico = "YOUR_UNIQUE_ID_HERE"
+  idUnico = "10052.11-00"
 )
 
 head(physical_execution)

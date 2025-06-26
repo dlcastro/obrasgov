@@ -96,7 +96,7 @@ obrasgov_api_request <- function(path, query_params = list(), showProgress = TRU
     
     if (showProgress) {
       pb <- progress::progress_bar$new(
-        format = ifelse(max_pages == Inf, "Downloading page :current from :total [:bar] :percent in :elapsed","Downloading page :current from :total [:bar] :percent in :elapsed - USE read_project(max_pages = Inf) if you want to download ALL PAGES"),
+        format = ifelse(max_pages == Inf, "Downloading page :current from :total [:bar] :percent in :elapsed","Downloading page :current from :total [:bar] :percent in :elapsed"),
         total = pages_to_fetch, clear = FALSE, width = 60
       )
       pb$tick()

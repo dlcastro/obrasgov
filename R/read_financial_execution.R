@@ -13,7 +13,7 @@
 #' @param workers An integer specifying the number of parallel workers (cores) to use when `parallel = TRUE`.
 #' @return A data frame with financial execution data.
 #' @export
-read_financial_progress <- function(
+read_financial_execution <- function(
     idProjetoInvestimento = NULL,
     nrNotaEmpenho = NULL,
     ugEmitente = NULL,
