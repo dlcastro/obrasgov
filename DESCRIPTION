@@ -3,8 +3,9 @@ Title: Read data from Obrasgov.BR API
 Version: 0.1.0
 Authors@R: 
     person("Daniel", "Castro", email = "daniel@dlcastro.com", role = c("aut", "cre"))
-Description: Package to read data from brazillian federal construction projects hosted into Obrasgov.BR API. (https://api.obrasgov.gestao.gov.br/obrasgov/api/swagger-ui/index.html#/).
+Description: Package to read data from brazillian federal projects hosted into Obrasgov.BR API. (https://api.obrasgov.gestao.gov.br/obrasgov/api/swagger-ui/index.html#/).
 License: MIT + file LICENSE
+URL: https://github.com/dlcastro/obrasgov
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
