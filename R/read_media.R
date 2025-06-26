@@ -18,7 +18,7 @@ read_media <- function(
   
   
   query_params <- list(
-    idUnico = idUnico,
+    idUnico = idUnico
   )
   
   query_params <- query_params[!sapply(query_params, is.null)]

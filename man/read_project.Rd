@@ -13,6 +13,7 @@ read_project(
   dataCadastro = NULL,
   natureza = NULL,
   tamanhoDaPagina = 10,
+  geometry = TRUE,
   showProgress = TRUE,
   max_pages = Inf,
   parallel = FALSE,
@@ -34,11 +35,13 @@ read_project(
 
 \item{natureza}{Intervation nature (e.g, "Obra").}
 
-\item{tamanhoDaPagina}{NSet the page size. A larger value reduces the number of API calls.}
+\item{tamanhoDaPagina}{Set the page size. A larger value reduces the number of API calls.}
+
+\item{geometry}{Converts WKB code to Geometry.  Defaults to \code{TRUE}. Turn FALSE if you fell it is breaking the downloading.}
 
 \item{showProgress}{A logical value to control whether the progress bar is displayed.}
 
-\item{max_pages}{An integer to limit the maximum number of pages to download. Defaults to \code{Inf} (all pages).}
+\item{max_pages}{Maximum number of pages to download. Change to \code{Inf} to download all pages.}
 
 \item{parallel}{A logical value to enable parallel processing for downloads. Defaults to \code{FALSE}.}
 

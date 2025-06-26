@@ -96,7 +96,7 @@ obrasgov_api_request <- function(path, query_params = list(), showProgress = TRU
     
     if (showProgress) {
       pb <- progress::progress_bar$new(
-        format = "Baixando página :current de :total [:bar] :percent em :elapsed",
+        format = "Downloading page :current from :total [:bar] :percent in :elapsed",
         total = pages_to_fetch, clear = FALSE, width = 60
       )
       pb$tick()
@@ -123,3 +123,92 @@ obrasgov_api_request <- function(path, query_params = list(), showProgress = TRU
     return(dplyr::bind_rows(all_data_list))
   }
 }
+
+
+
+
+
+#' Flatten Nested Project Data
+#'
+#' This function takes the nested data.frame returned by `read_project()` and
+#' transforms it into a list of flat data.frames. The main data.frame contains
+#' all non-list columns, and each nested list column is converted
+#' into its own separate data.frame.
+#'
+#' @param project_data A data.frame, typically the result from the `read_project()` function.
+#' @return A list of data.frames. The first element, named 'projects', contains
+#'   the main project data. Subsequent elements are named after
+#'   the original nested columns (e.g., 'tomadores', 'executores') and contain
+#'   the flattened data from those columns, with an `idUnico` column for joining
+#'   and prefixed column names.
+#' @importFrom dplyr select select_if rename_with
+#' @importFrom tidyr unnest
+#' @importFrom rlang sym
+#' @export
+#' @examples
+#' \dontrun{
+#' # First, fetch the project data
+#' nested_projects <- read_project(uf = "DF", situacao = "Concluída")
+#'
+#' # Now, flatten the nested data
+#' project_list <- flatten_projects(nested_projects)
+#'
+#' # Access the main projects data.frame
+#' main_df <- project_list$projects
+#'
+#' # Access the flattened geometries data.frame
+#' geometries_df <- project_list$geometries
+#'
+#' # Display the first few rows of the geometries data.frame
+#' head(geometries_df)
+#' }
+flatten_projects <- function(project_data) {
+  
+  # Returns an empty list if the input data.frame is invalid or empty
+  if (!is.data.frame(project_data) || nrow(project_data) == 0) {
+    return(list())
+  }
+  
+  # 1. Separate the main data.frame (columns that are not lists)
+  # Corrected the syntax to use the formula notation `~` required by dplyr's select_if.
+  main_df <- project_data |> 
+    dplyr::select(dplyr::where(~!is.list(.x)))
+  
+  # 2. Get the names of the columns that are lists
+  list_cols <- names(project_data)[sapply(project_data, is.list)]
+  
+  # 3. Create the results list, starting with the main data.frame
+  result_list <- list(projects = main_df)
+  
+  # 4. Process each list column
+  for (col_name in list_cols) {
+    
+    # Key step: For each nested column, we select the project's `idUnico` 
+    # along with the list column itself. The `tidyr::unnest` function then 
+    # flattens the list, replicating the corresponding `idUnico` for each 
+    # nested element. This ensures the connection between the main data (projects) 
+    # and this secondary data is maintained.
+    flattened_df <- project_data |>
+      dplyr::select(idUnico, !!rlang::sym(col_name)) |>
+      tidyr::unnest(cols = c(!!rlang::sym(col_name)), keep_empty = TRUE)
+    
+    # Check if unnesting produced any columns besides `idUnico`
+    if (ncol(flattened_df) > 1) {
+      
+      # 5. Add a prefix to the new columns, avoiding renaming `idUnico`
+      flattened_df <- flattened_df |>
+        dplyr::rename_with(
+          ~ paste(col_name, .x, sep = "_"),
+          -idUnico
+        )
+      
+      # Add the flattened data.frame to the results list
+      result_list[[col_name]] <- flattened_df
+    }
+    # If unnesting results only in `idUnico` (i.e., all nested lists 
+    # were empty or null), the data.frame is not added to the list to avoid redundancy.
+  }
+  
+  return(result_list)
+}
+
