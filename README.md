@@ -1,4 +1,4 @@
-# obrasgov: An R Package for reading data from Obrasgov API
+# obrasgov: An R Package for reading data from Brazil's Obrasgov API
 
 ![R-CRAN-Badge](https://img.shields.io/badge/R-4.0%2B-blue.svg) ![License](https://img.shields.io/badge/License-MIT-green.svg)
 
