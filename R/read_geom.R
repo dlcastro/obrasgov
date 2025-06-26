@@ -1,11 +1,11 @@
 #' Get Georeferencing Data
 #' 
-#' This function retrieves georeferencing data from the Obrasgov API.
+#' This function retrieves Projects' georeferencing data from the Obrasgov.BR API.
 #' @param idUnico Unique identifier of the intervention.
 #' @param showProgress A logical value to control whether the progress bar is displayed.
 #' @return A data frame with georeferencing data.
 #' @export
-obrasgov_get_geometria <- function(
+read_geom <- function(
     idUnico = NULL,
     showProgress = TRUE
 ) {

@@ -1,10 +1,10 @@
-# obrasgovR: An R Package for Accessing the Obrasgov API
+# obrasgov: An R Package for reading data from Obrasgov API
 
 ![R-CRAN-Badge](https://img.shields.io/badge/R-4.0%2B-blue.svg) ![License](https://img.shields.io/badge/License-MIT-green.svg)
 
-`obrasgovR` is an R package designed to simplify interaction with the Obrasgov API (<https://api.obrasgov.gestao.gov.br/obrasgov/api/swagger-ui/index.html#/>). It provides intuitive functions to extract data from all available endpoints, enabling analysts and researchers to access information on federal public works investment projects, financial execution, physical execution, and georeferencing directly within their R workflows.
+`obrasgov` is an R package designed to simplify interaction with the Obrasgov API (<https://api.obrasgov.gestao.gov.br/obrasgov/api/swagger-ui/index.html#/>). It provides intuitive functions to extract data from all available endpoints, enabling analysts and researchers to access information on federal public works investment projects, financial execution, physical execution, and georeferencing directly within their R workflows.
 
-## Why use `obrasgovR`?
+## Why use `obrasgov`?
 
 * **Simplified Access**: Abstracts the complexity of HTTP requests and JSON handling.
 
@@ -18,7 +18,7 @@
 
 ## Installation
 
-To install the development version of `obrasgovR` directly from GitHub, you will need the `devtools` package. If you don't have it yet, install it first:
+To install the development version of `obrasgov` directly from GitHub, you will need the `devtools` package. If you don't have it yet, install it first:
 
 ```r
 # 1. Install the 'devtools' package (if you haven't already)
@@ -26,8 +26,8 @@ if (!requireNamespace("devtools", quietly = TRUE)) {
   install.packages("devtools")
 }
 
-# 2. Install the 'obrasgovR' package from GitHub
-devtools::install_github("dlcastro/obrasgovR")
+# 2. Install the 'obrasgov' package from GitHub
+devtools::install_github("dlcastro/obrasgov")
 ```
 
 ## How to Use: A Quick Guide
@@ -37,12 +37,12 @@ After installation, you can load the package and start using its functions. Each
 ### 1. Loading the Package
 
 ```r
-library(obrasgovR)
+library(obrasgov)
 ```
 
 ### 2. Common Function Parameters
 
-Most data extraction functions in `obrasgovR` share a set of parameters to control the download process:
+Most data extraction functions in `obrasgov` share a set of parameters to control the download process:
 
 * `tamanhoDaPagina` (or `size`): Sets the number of results per page. A larger value reduces the number of API calls but is subject to API limits. Defaults to `20`.
 
@@ -56,7 +56,7 @@ Most data extraction functions in `obrasgovR` share a set of parameters to contr
 
 ### 3. Data Extraction Functions
 
-The functions in `obrasgovR` are clearly named to reflect the API endpoints. Below are examples of how to use each one.
+The functions in `obrasgov` are clearly named to reflect the API endpoints. Below are examples of how to use each one.
 
 #### `obrasgov_get_projetos_investimento()`
 
@@ -203,7 +203,7 @@ head(geometry_data)
 
 ## Contribution
 
-Contributions are welcome! If you find a bug, have a suggestion for improvement, or want to add new features, please open an issue or submit a pull request in the [GitHub repository](https://github.com/dlcastro/obrasgovR).
+Contributions are welcome! If you find a bug, have a suggestion for improvement, or want to add new features, please open an issue or submit a pull request in the [GitHub repository](https://github.com/dlcastro/obrasgov).
 
 ## License
 

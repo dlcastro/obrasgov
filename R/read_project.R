@@ -17,7 +17,7 @@
 #' @param workers An integer specifying the number of parallel workers (cores) to use when `parallel = TRUE`.
 #' @return A data frame with investment projects.
 #' @export
-obrasgov_get_projetos_investimento <- function(
+read_project <- function(
     idUnico = NULL,
     situacao = NULL,
     codigoOrganizacao = NULL,
@@ -25,7 +25,7 @@ obrasgov_get_projetos_investimento <- function(
     uf = NULL,
     dataCadastro = NULL,
     natureza = NULL,
-    tamanhoDaPagina = 20,
+    tamanhoDaPagina = 10,
     showProgress = TRUE,
     max_pages = Inf,
     parallel = FALSE,

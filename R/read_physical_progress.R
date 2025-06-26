@@ -10,7 +10,7 @@
 #' @param workers An integer specifying the number of parallel workers (cores) to use when `parallel = TRUE`.
 #' @return A data frame with physical execution data.
 #' @export
-obrasgov_get_execucao_fisica <- function(
+read_physical_progress <- function(
     idUnico = NULL,
     situacao = NULL,
     showProgress = TRUE,
@@ -35,31 +35,3 @@ obrasgov_get_execucao_fisica <- function(
   )
 }
 
-
-#' Get Intervention Files (Photos and Videos)
-#' 
-#' This function retrieves files (photos and videos) related to an intervention from the Obrasgov API.
-#' @param idUnico Unique identifier of the intervention.
-#' @param showProgress A logical value to control whether the progress bar is displayed.
-#' @return A data frame with intervention files data.
-#' @export
-obrasgov_get_arquivos_intervencao <- function(
-    idUnico = NULL,
-    showProgress = TRUE
-) {
-  
-  
-  # Verify if idUnico is filled.
-  if (is.null(idUnico)) {
-    stop("idUnico needs to be filled in")
-  }
-  
-  
-  query_params <- list(
-    idUnico = idUnico,
-  )
-  
-  query_params <- query_params[!sapply(query_params, is.null)]
-  
-  obrasgov_api_request("/execucao-fisica/arquivos-da-intervencao", query_params, showProgress = showProgress)
-}
